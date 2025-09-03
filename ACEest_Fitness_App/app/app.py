@@ -31,5 +31,16 @@ def add_workout():
 def list_workouts():
     return jsonify(WORKOUTS)
 
+@app.post("/delete/<int:index>")
+def delete_workout(index):
+    if 0 <= index < len(WORKOUTS):
+        removed = WORKOUTS.pop(index)
+        if request.is_json:
+            return jsonify({"status": "deleted", "workout": removed}), 200
+        return redirect(url_for("index"))
+    else:
+        abort(404, description="Workout not found")
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

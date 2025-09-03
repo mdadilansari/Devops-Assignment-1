@@ -116,7 +116,9 @@
                 <span><strong>{{ w.workout }}</strong> — {{ w.duration }} minutes</span>
                 <form action="/delete/{{ loop.index0 }}" method="post" style="margin:0;">
                     <button type="submit"
-                        style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:#ff4d4d;">
+                        style="background:none;
+                        border:none; 
+                        cursor:pointer; font-size:1.2rem; color:#ff4d4d;">
                         🗑️
                     </button>
                 </form>

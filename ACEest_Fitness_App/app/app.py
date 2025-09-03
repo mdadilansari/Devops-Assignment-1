@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template, redirect, url_for, jsonify, abort
 
 app = Flask(__name__)
-WORKOUTS = []  # simple in-memory list
+
+# Global in-memory store for workouts
+WORKOUTS = []
 
 @app.get("/")
 def index():
@@ -40,7 +42,6 @@ def delete_workout(index):
         return redirect(url_for("index"))
     else:
         abort(404, description="Workout not found")
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

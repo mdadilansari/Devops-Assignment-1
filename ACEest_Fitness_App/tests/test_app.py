@@ -1,5 +1,10 @@
 import pytest
-from app.app import app
+from app.app import app, WORKOUTS  
+
+# This fixture clears the workout list before each test
+@pytest.fixture(autouse=True)
+def clear_workouts():
+    WORKOUTS.clear()
 
 @pytest.fixture()
 def client():

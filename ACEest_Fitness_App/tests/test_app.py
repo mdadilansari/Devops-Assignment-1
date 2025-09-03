@@ -22,3 +22,23 @@ def test_add_workout(client):
 def test_invalid_duration(client):
     r = client.post("/add", data={"workout": "Run", "duration": "abc"})
     assert r.status_code == 400
+
+def test_delete_workout(client):
+    # Add a workout first
+    client.post("/add", data={"workout": "Squats", "duration": "12"})
+    r1 = client.get("/workouts")
+    data_before = r1.get_json()
+    assert any(w["workout"] == "Squats" for w in data_before)
+
+    # Delete the workout
+    r2 = client.post("/delete/0", follow_redirects=True)
+    assert r2.status_code == 200
+
+    # Check it's gone
+    r3 = client.get("/workouts")
+    data_after = r3.get_json()
+    assert all(w["workout"] != "Squats" for w in data_after)
+
+def test_delete_invalid_index_returns_404(client):
+    r = client.post("/delete/999")
+    assert r.status_code == 404
